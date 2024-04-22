@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  background-color: #383838;
+}
+.content {
+  color: #09fbba;
+  transition: 1s;
+}
+h1 {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 4rem;
+  margin-top: 20px;
+}
+p {
+  padding: 30px 50px;
+}
+
+/*La class Sidebar via son id , est le container de la liste ul + sur la droite le bouton composé de 3 span  */
+#side-bar { /*Cet id est Prioritaire sur la class .sidebar-clicked quand il s'agit d'injecter cette derniere en toggle en JS  donc il faudra rajouter !important ds .sidebar-clicked afin qu'elle passe devant l'id*/
+  position: absolute; /*Permet de placer l'élément sur le côté*/
+  width: 230px;
+  height: 100%;  /* La sidebar va jusqu'en bas*/ 
+  background: #09fbba;
+  top: 0;
+  left: -230px; /*Pas visible au départ donc*/
+  transition: 0.5s ease-out;
+  z-index: 4;
+}
+/*le container des 3 barres vertes où cliquer*/
+.toggle-btn {
+  position: absolute; 
+  top: 30px;
+  left: 240px; /*visible car left à 240px vers la droite de #side-bar son container */
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+}
+/*Class crée uniquement pour le toggle en JS: */
+ .sidebar-clicked {
+  left: 0px   !important;  /*Priorités en CSS : !important > id > classe > baliseHtml, hors ici l'id #side-bar est prioritaire sur la class .sidebar-clicked*/
+ }
+/* OU on peut aussi donner la priorité à .sidebar cliked de cette manière 
+#side-bar.sidebar-clicked {
+  left: 0px   
+}  */
+
+/****** ASSOMBRIR QUAND CLICK SUR LE CONTENU: ******/
+/* Si la class .sidebar-clicked EXISTE (donc uniquement quand elle est injectée),quand la sidebar sort,
+ alors je veux que tu m'ajoutes une opacité de 0.3 à la class .content: */
+.sidebar-clicked ~ .content { /*** "~" => option + n ***/
+  opacity: 0.3;
+}
+
+/*Les 3 barres vertes*/
+.toggle-btn span { 
+  width: 60px;
+  height: 10px;
+  border-radius: 5px;
+  background: #09fbba;
+  display: block; /*Pour qu'elles soient les 3 en dessous des autres, de base un span est "inline"*/
+  margin-top: 4px;
+  transition: 0.3s ease;
+}
+
+ /* QUAND CLASS .sidebar-clicked est injectée (donc activée) les span doivent avoir ce comportement : DEVENIR UNE CROIX */
+ .sidebar-clicked span {
+  position: absolute; /*Tout doit être en absolute sinon on ne peut pas controler le positionnement correctement et la croix ne sera pas belle*/ 
+ }
+
+.sidebar-clicked span:nth-child(1) {/*span1*/
+  transform: rotate(45deg);
+}
+.sidebar-clicked span:nth-child(2) { /*span2*/
+  opacity: 0;
+}
+.sidebar-clicked span:nth-child(3) { /*span3*/
+  transform: rotate(-45deg);
+}
+
+li {
+  color: #292929;
+  list-style: none;
+  font-size: 2.5rem;
+  cursor: pointer;
+  padding-left: 5px;
+}
+li:hover {
+  background: #292929;
+  color: #fcfcfb;
+}
